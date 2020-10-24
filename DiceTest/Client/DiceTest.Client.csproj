@@ -15,18 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Pages\FetchData.razorx" />
-    <None Remove="Shared\NavMenu.razorx" />
-    <None Remove="Shared\SurveyPrompt.razorx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Pages\FetchData.razorx" />
-    <Content Include="Shared\NavMenu.razorx" />
-    <Content Include="Shared\SurveyPrompt.razorx" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.1" PrivateAssets="all" />
