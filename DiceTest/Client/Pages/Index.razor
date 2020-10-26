@@ -9,9 +9,34 @@
     <img src=@Gifs[5] id="Die6" class="Die" />
 </div>
 
+<div id="betDiv">
+    Bet Amount:
+    <input type="number" id="betAmount" value="10" />
+</div>
+
+<div id="bankDiv">
+    Current Bank: @currentBank
+</div>
+
+<div id="betsDiv">
+    <br />
+    5 of a kind - 100x bet
+    <br />
+    4 of a kind - 50x bet
+    <br />
+    3 of a kind - 10x bet
+    <br />
+    Straight - 5x bet
+    <br />
+</div>
+
 <div id="buttonDiv">
-    <button @onclick="OnRollDice">Roll Dice</button>
-    <button @onclick="OnNewGame">New Game</button>
+    <button class="btn btn-primary" @onclick="OnRollDice">Roll Dice</button>
+    <button class="btn btn-secondary" @onclick="OnNewGame">New Game</button>
+</div>
+
+<div id="rollResult">
+    temp
 </div>
 
 @code {
@@ -21,10 +46,13 @@
     [Parameter]
     public string Title { get; set; }
 
+    decimal currentBank = 150.00m;
+
     //[Parameter]
     public string[] Gifs = new string[6];
 
     protected override void OnInitialized() {
+        //currentBank = 150.00m;
         RollDice();
     }
 
@@ -39,7 +67,7 @@
 
     private void RollDice() {
         Random rnd = new Random();
-        for(int i = 0; i < 6;i++) {
+        for (int i = 0; i < 6; i++) {
             Gifs[i] = $"assets/{rnd.Next() % 6 + 1}.gif";
         }
     }
