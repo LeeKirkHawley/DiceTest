@@ -15,10 +15,10 @@
 </div>
 
 <div id="bankDiv">
-    Current Bank: @currentBank
+    Current Bank: <span class="redText">$@currentBank</span>
 </div>
 
-<div id="betsDiv">
+<div id="scoringDiv">
     <br />
     5 of a kind - 100x bet
     <br />
@@ -36,7 +36,7 @@
 </div>
 
 <div id="rollResult">
-    @rollResult
+    <span class="redText">@rollResult</span>
 </div>
 
 @code {
@@ -132,9 +132,9 @@
 
         var sortedMatches = matches.OrderByDescending(d => d.Value).ToList();
 
-        foreach (KeyValuePair<string, int> p in sortedMatches) {
-            Console.WriteLine(p.Key + " " + p.Value);
-        }
+        //foreach (KeyValuePair<string, int> p in sortedMatches) {
+        //    Console.WriteLine(p.Key + " " + p.Value);
+        //}
 
         return sortedMatches.First().Value;
     }
