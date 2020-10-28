@@ -11,7 +11,7 @@
 
 <div id="betDiv">
     Bet Amount:
-    <input type="number" id="betAmount" value="10" />
+    <input type="number" id="betAmount" value=@betAmount />
 </div>
 
 <div id="bankDiv">
@@ -36,7 +36,7 @@
 </div>
 
 <div id="rollResult">
-    temp
+    @rollResult
 </div>
 
 @code {
@@ -47,6 +47,8 @@
     public string Title { get; set; }
 
     decimal currentBank = 150.00m;
+    decimal betAmount = 10m;
+    string rollResult = "";
 
     public string[] Gifs = new string[6];
 
@@ -72,29 +74,40 @@
     }
 
     private void GetRollResult() {
+
+        //Gifs = new string[6] { "6.gif", "6.gif", "3.gif", "3.gif", "2.gif", "3.gif" };
         int matches = GetMatches(Gifs);
 
         switch(matches) {
             case 5:
                 Console.WriteLine("5 of a kind.");
+                currentBank += betAmount * 100;
+                rollResult = $"5 of a kind. You win ${betAmount * 100}";
                 break;
 
             case 4:
                 Console.WriteLine("4 of a kind.");
-
+                currentBank += betAmount * 50;
+                rollResult = $"4 of a kind. You win ${betAmount * 50}";
                 break;
 
             case 3:
                 Console.WriteLine("3 of a kind.");
-
+                currentBank += betAmount * 10;
+                rollResult = $"3 of a kind. You win ${betAmount * 10}";
                 break;
 
             default:
                 if(GetConsecutive(Gifs) == true) {
                     Console.WriteLine("Straight.");
+                    currentBank += betAmount * 5;
+                    rollResult = $"You rolled a straight. You win ${betAmount * 5}";
                 }
                 else {
                     Console.WriteLine("Bad roll.");
+                    currentBank -= betAmount;
+                    rollResult = $"You lost ${betAmount}";
+
                 }
                 break;
         }
@@ -117,27 +130,25 @@
             }
         }
 
-        var sortedMatches = from x in matches
-                            orderby matches.Values ascending
-                            select x;
+        var sortedMatches = matches.OrderByDescending(d => d.Value).ToList();
 
-        //foreach(KeyValuePair<string, int> p in sortedMatches) {
-        //    Console.WriteLine(p.Key + " " + p.Value);
-        //}
+        foreach (KeyValuePair<string, int> p in sortedMatches) {
+            Console.WriteLine(p.Key + " " + p.Value);
+        }
 
         return sortedMatches.First().Value;
     }
 
     bool GetConsecutive(string[] Gifs) {
         int dieNumber = gifNumber(Gifs[0]);
-        int consecutive = 1;  // inits to 1 because that's the minimum
+        int consecutive = 1;  // init to 1 because that's the minimum
         for (int i = 1; i < Gifs.Length; i++) {
             var a = gifNumber(Gifs[i]);
             var b = gifNumber(Gifs[i - 1]);
             if (a == (b + 1))
                 consecutive++;
             else
-                consecutive = 1;
+                consecutive = 1; // init to 1 because that's the minimum
 
             if (consecutive == 3)
                 return true;
