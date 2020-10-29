@@ -11,7 +11,7 @@
 
 <div id="betDiv">
     Bet Amount:
-    <input type="number" id="betAmount" value=@betAmount />
+    <input @bind="betAmount" type="number" id="betAmount" />  @*HEADS UP Blazor value binding here*@
 </div>
 
 <div id="bankDiv">
@@ -19,7 +19,6 @@
 </div>
 
 <div id="scoringDiv">
-    <br />
     5 of a kind - 100x bet
     <br />
     4 of a kind - 50x bet
@@ -46,7 +45,7 @@
     [Parameter]
     public string Title { get; set; }
 
-    decimal currentBank = 150.00m;
+    decimal currentBank = 270.00m;
     decimal betAmount = 10m;
     string rollResult = "";
 
@@ -56,14 +55,28 @@
         RollDice();
     }
 
-
     private void OnRollDice() {
+
+        if(betAmount > currentBank) {
+            rollResult = "You don't have enough money for that bet.";
+            return;
+        }
+
         RollDice();
         GetRollResult();
     }
 
-    private void OnNewGame() {
+    private void onBetChange() {
 
+    }
+
+    private void OnNewGame() {
+        currentBank = 270.00m;
+        rollResult = "";
+
+        for (int i = 0; i < 6; i++) {
+            Gifs[i] = $"{i + 1}.gif";
+        }
     }
 
     private void RollDice() {
@@ -75,7 +88,6 @@
 
     private void GetRollResult() {
 
-        //Gifs = new string[6] { "6.gif", "6.gif", "3.gif", "3.gif", "2.gif", "3.gif" };
         int matches = GetMatches(Gifs);
 
         switch(matches) {
